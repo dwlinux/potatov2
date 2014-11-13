@@ -1,0 +1,14 @@
+<RCC>
+    <qresource prefix="/icons">
+        <file>icons/control_eject_blue.png</file>
+        <file>icons/control_end_blue.png</file>
+        <file>icons/control_equalizer_blue.png</file>
+        <file>icons/control_fastforward_blue.png</file>
+        <file>icons/control_pause_blue.png</file>
+        <file>icons/control_play_blue.png</file>
+        <file>icons/control_repeat_blue.png</file>
+        <file>icons/control_rewind_blue.png</file>
+        <file>icons/control_start_blue.png</file>
+        <file>icons/control_stop_blue.png</file>
+    </qresource>
+</RCC>
