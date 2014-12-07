@@ -3,7 +3,6 @@
 #include <qtoolbar.h>
 #include <qlabel.h>
 #include <qslider.h>
-#include <QMediaPlayer>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -21,22 +20,25 @@ MainWindow::MainWindow(QWidget *parent)
     QObject::connect(quitAction,SIGNAL(triggered()),qApp,SLOT(quit()));
 
 
-    QAction *playAction = new QAction(QIcon(":/icons/icons/control_play_blue.png"),"Lire",this);
+    playAction = new QAction(QIcon(":/icons/icons/control_play_blue.png"),"Lire",this);
     playMenu->addAction(playAction);
 
-    QAction *pauseAction = new QAction(QIcon(":/icons/icons/control_pause_blue.png"),"Pause",this);
+    pauseAction = new QAction(QIcon(":/icons/icons/control_pause_blue.png"),"Pause",this);
+    pauseAction->setVisible(false);
     playMenu->addAction(pauseAction);
 
-    QAction *stopAction = new QAction(QIcon(":/icons/icons/control_stop_blue.png"),"Arrêter",this);
+
+    stopAction = new QAction(QIcon(":/icons/icons/control_stop_blue.png"),"Arrêter",this);
+    stopAction->setEnabled(false);
     playMenu->addAction(stopAction);
 
-    QAction *prevAction = new QAction(QIcon(":/icons/icons/control_start_blue.png"),"Précédent",this);
+    prevAction = new QAction(QIcon(":/icons/icons/control_start_blue.png"),"Précédent",this);
     playMenu->addAction(prevAction);
 
-    QAction *nextAction = new QAction(QIcon(":/icons/icons/control_end_blue.png"),"Suivant",this);
+    nextAction = new QAction(QIcon(":/icons/icons/control_end_blue.png"),"Suivant",this);
     playMenu->addAction(nextAction);
 
-    QAction *repeatAction = new QAction(QIcon(":/icons/icons/control_repeat_blue.png"),"Répéter",this);
+    repeatAction = new QAction(QIcon(":/icons/icons/control_repeat_blue.png"),"Répéter",this);
     repeatAction->setCheckable(true);
     playMenu->addAction(repeatAction);
 
@@ -56,11 +58,21 @@ MainWindow::MainWindow(QWidget *parent)
     playToolbar->addSeparator();
     playToolbar->addAction(repeatAction);
 
-    QMediaPlayer *player = new QMediaPlayer();
+    player = new QMediaPlayer();
     player->setMedia(QUrl::fromLocalFile("/home/nyx/mario8bit.mp3"));
-    QObject::connect(playAction,SIGNAL(triggered()),player,SLOT(play()));
+    QObject::connect(playAction,SIGNAL(triggered()),this,SLOT(setPlay()));
     QObject::connect(pauseAction,SIGNAL(triggered()),player,SLOT(pause()));
+    QObject::connect(stopAction,SIGNAL(triggered()),player,SLOT(stop()));
 }
+
+void MainWindow::setPlay(void){
+    this->player->play();
+    this->playAction->setVisible(false);
+    this->pauseAction->setVisible(true);
+    this->stopAction->setEnabled(true);
+}
+
+
 
 MainWindow::~MainWindow()
 {
